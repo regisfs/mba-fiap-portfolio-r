@@ -1,0 +1,334 @@
+---
+title: "Programando IA com R - Aula 02"
+author: "Aluno: Regis Spindola"
+date: "23/04/2018"
+output: html_document
+---
+
+# Exercício 1
+
+Criar 6 vetores:
+
+Vetor 𝑎 de inteiros com 5 números:
+
+*Número da matrícula na FIAP (sem letras) 
+
+*Data de nascimento, formato yyyyMMdd
+
+*3 últimos dígitos do seu CPF
+
+*6 primeiros dígitos do RG
+
+*4 dígitos da placa do carro (pode inventar)
+```{r}
+a <- c(330397,19850213,850,381496, 5664)
+a
+```
+
+Vetor 𝑏 com o dobro do vetor 𝑎
+```{r}
+b <- a*2
+b
+```
+
+Vetor 𝑐 com um terço de 𝑏
+```{r}
+c <- b/3
+c
+```
+
+Vetor 𝑑 com 𝑐 + 𝑎2
+```{r}
+d <- c + a ^ 2
+d
+```
+
+Vetor e com $sqrt(d)
+```{r}
+e <- sqrt(d)
+e
+```
+Criar vetor 𝑎𝑖 com o inverso de 𝑎
+```{r}
+ai <- rev(a)
+ai
+```
+
+# Exercício 2
+Criar matrizes:
+
+* $M1_{6x5}$ com cada linha contendo o valor de um dos vetores
+```{r}
+M1 <- matrix(data = c(a, b, c, d, e, ai), ncol = 6, byrow = T)
+M1
+```
+
+* $M2_{5x6}$ com cada coluna contendo o valor de um dos vetores
+```{r}
+M2 <- matrix(data = c(a, b, c, d, e, ai), ncol = 5, byrow = F)
+M2
+```
+
+* $M3_{6x5}$ com cada elemento contendo 10% de 𝑀1 , ou seja, 𝑀1 × 0,1
+```{r}
+M3 <- 0.1 * M1
+M3
+```
+
+A tabela “attitude” é um data frame 30,7. 
+
+* `class(attitude)`
+
+* `dim(attitude)`
+
+* Criar matriz $M4_{5x6}$ sendo uma tabela com 5 linhas e 6 colunas quaisquer de attitude
+Obs.: Converter de data.frame para matrix com o comando as.matrix()
+```{r}
+M4 <- as.matrix(attitude[10:14, 1:6])
+M4
+```
+
+# Exercício 3
+
+Criar matriz (in memory) 19x19 com os valores 1 e 2 nos elementos, alternadamente.
+```{r}
+A = matrix(1:2, nrow = 19, ncol = 19)
+A
+```
+
+Subtrair 1 de cada elemento desta matriz
+```{r}
+A <- A - 1
+A
+```
+
+Somar 1 para cada elemento da linha 1, 2 na linha 2, ... e 19 na linha 19.
+Dica: Use um vetor
+```{r}
+B = A + 1:19
+B
+```
+
+# Exercício 4
+
+Criar matrizes:
+
+*𝑀5 com cada elemento sendo a a multiplicação do elemento equivalente das matrizez 𝑀1 e 𝑀3. Ou seja 𝑚5𝑖,𝑗 = 𝑚1𝑖,𝑗 × 𝑚3𝑖,𝑗
+```{r}
+M5 <- M1 * M3
+M5
+```
+
+*𝑀6 com cada elemento sendo a a multiplicação do elemento equivalente das matrizez 𝑀3 e 𝑀1. Ou seja
+   𝑚6𝑖,𝑗 = 𝑚3𝑖,𝑗 × 𝑚1𝑖,𝑗
+```{r}
+M6 <- M3 * M1
+M6
+```
+
+*Criar matriz 𝑀7 com a multiplicação das matrizes 𝑀1 e 𝑀4
+```{r}
+#M7 <- M1 %*% M4
+#M7
+```
+
+*Criar matriz 𝑀8 com a multiplicação das matrizes 𝑀4 e 𝑀1
+```{r}
+#M8 <- M4 %*% M1
+#M8
+```
+
+'𝑀5 == 𝑀6?'
+```{r}
+#M5 == M6
+```
+
+𝑀7 == 𝑀8 ?
+```{r}
+#M7 == M8
+```
+
+# Exercicio 5
+
+'Obter o valor da matriz X na equação:'
+
+𝐴𝑋=𝐵
+
+A = as.matrix( attitude[21:25, 1:5] )
+B = as.matrix( attitude[11:15, 1:5] )
+
+```{r}
+A = as.matrix( attitude[21:25, 1:5] )
+B = as.matrix( attitude[11:15, 1:5] )
+X <- solve(A) %*% B
+X
+```
+
+# Exercicio 6
+
+Chunk com todo o conteúdo da tabela ‘cars’
+
+```{r}
+cars
+```
+
+Chunk com 5 primeiras linhas da tabela ‘cars’
+```{r}
+head(cars, 5)
+```
+
+Chunk com 5 últimas linhas da tabela ‘cars’
+```{r}
+tail(cars, 5)
+```
+
+Chunk com o resumo da tabela ‘cars’
+```{r}
+summary(cars)
+```
+
+Chunk com plot simples da tabela ‘cars’
+```{r}
+plot(cars)
+```
+
+
+# Exercicio 7
+
+**Criar 5 variáveis sendo cada uma de um tipo dos valores especiais (NA, NaN, Inf, -Inf e NULL)**
+```{r}
+a <- NA
+a
+b <- NaN
+b
+c <- NULL
+c
+d <- Inf
+d
+e <- -Inf
+e
+```
+
+
+**Criar um Vetor com as 5 variáveis.**
+```{r}
+vet <- c(a, b, c, d, e)
+vet
+```
+
+**Foi possivel criar o vetor ?**
+
+*SIM*
+
+**Verificar os valores das variáveis e vetor através das funções**
+
+* `is.na()`
+* `is.nan()`
+* `is.null()`
+* `is.infinite()`
+* `is.finite()`
+```{r}
+is.na(vet)
+is.nan(vet)
+is.null(vet)
+is.infinite(vet)
+is.finite(vet)
+
+is.na(a)
+is.nan(b)
+is.null(c)
+is.finite(d)
+is.infinite(e)
+
+```
+
+# Exercicio 8 - *Lubridate*
+
+**Criar uma duration com 260 segundos**
+```{r}
+library("lubridate")
+segundos <- as.duration(260)
+segundos
+```
+
+**Criar uma duration com 260 segundos e dividi-la por 60**
+```{r}
+minutos <- as.duration(minutes(260))/60
+minutos
+```
+
+**Criar uma duration de 1 dia e subtraia uma duration de 60 minutos**
+```{r}
+dia <- as.duration(hours(24) - minutes(60))
+as.period(dia)
+```
+
+**Criar uma duratrion de 12 dias, 5 horas e 10 minutos**
+```{r}
+intervalo <- as.duration("12days 5hours 10mins")
+as.period(intervalo)
+```
+
+**Calcular a Black Friday de 2018**
+
+*O Black Friday acontece 1 dias depois do dia de ação de graças americadno, que é celebrado na 4a quinta-feira de novembro.*
+
+**Crie uma variável representando 1-nov-2018**
+```{r}
+dataX <- ymd("2018-11-01")
+dataX
+```
+
+**Verifique que dia da semana é 1-nov**
+```{r}
+wday(dataX, label = TRUE, abbr = FALSE)
+```
+
+**Adicione a quantidade necessária para chegar na quinta feira e adicione em uma segunda variável**
+```{r}
+#dataX.week <- wday(dataX, abbr = FALSE)
+#data.5f <- dataX + days(5 - dataX.week)
+```
+
+**Adicione 3 semanas.**
+```{r}
+data.AG <- dataX + weeks(3)
+data.BF <- data.AG + days(1)
+wday(data.BF, label = TRUE, abbr = FALSE)
+data.BF
+```
+
+# Exercicio 9 - Sequenciais
+
+**Crie uma variável `my_seq` com 30 valores entre 5 e 10**
+```{r}
+my_seq <- seq(5, 10, length=30)
+my_seq
+```
+
+**Qual a diferença das instruções**
+* `pi:10`
+* `10:pi`
+
+```{r}
+pi1 <- pi:10
+pi1
+pi2 <- 10:pi
+pi2
+```
+
+*A instrução `pi:10` retorna os valores de PI < 10*
+
+*A instrução `10:pi` retorna os valores de 10 até o PI*
+
+**Consulte o tamanho do vetor `my_seq`**
+```{r}
+length(my_seq)
+```
+
+**Como fazer uma sequencia que acompanhe o tamanho do vetor `my_seq`**
+```{r}
+seq(along.with = my_seq)
+seq_along(my_seq)
+```
+

@@ -1,0 +1,67 @@
+---
+title: "Aula 04 - RMarkdown"
+author: "Regis Spindola"
+date: "03/06/2018"
+output: html_document
+---
+
+# Exercicio 1
+
+**Criar uma função que recebe uma url e baixa o arquivo sempre na pasta "./data"**
+
+* *Chamar a função para os seguintes arquivos :*
+* https://raw.githubusercontent.com/elthonf/fiap-mba-r/master/data/Copas.csv
+* https://raw.githubusercontent.com/elthonf/fiap-mba-r/master/data/Copas-Partidas.csv
+* https://raw.githubusercontent.com/elthonf/fiap-mba-r/master/data/Copas-Jogadores.csv
+
+```{r}
+download.data <- function(file.url, file.local = NA){
+  if(!file.exists('data')){
+    dir.create('data')
+  }
+  
+  if(is.na(file.local)){
+    file.local = file.path('~/data', basename(file.url))
+  }
+  
+  download.file(url='', destfile = '~/data', mode = 'wb')
+  list.files('~/data')
+}
+
+download.data('https://raw.githubusercontent.com/elthonf/fiap-mba-r/master/data/Copas.csv')
+download.data('https://raw.githubusercontent.com/elthonf/fiap-mba-r/master/data/Copas-Partidas.csv')
+download.data('https://raw.githubusercontent.com/elthonf/fiap-mba-r/master/data/Copas-Jogadores.csv')
+
+```
+
+# Exercicio 2
+
+**Lendo Excel**
+*Para esta atividade, vamos buscar dados públicos atualizados*
+*Baixar o arquivo utilizando a função de download*
+* https://github.com/elthonf/fiap-mba-r/raw/master/data/cameras.baltimore.xlsx
+```{r}
+download.data('https://github.com/elthonf/fiap-mba-r/raw/master/data/cameras.baltimore.xlsx')
+```
+
+**Qual a câmera mais ao Norte?**
+```{r}
+library("readxl")
+baltimore <- read_excel("~/data/cameras.baltimore.xlsx")
+```
+
+**Qual a câmera mais ao Sul**
+```{r}
+
+```
+
+**Qual a câmera mais ao Leste**
+```{r}
+
+```
+
+**Qual a câmera mais ao Oeste**
+```{r}
+
+```
+

@@ -1,0 +1,65 @@
+---
+title: "Programando IA com R - Aula 01"
+author: "Aluno: Regis Spindola"
+date: "20/05/2018"
+output: html_document
+---
+
+# Exercício 1:
+
+Crie 10 variáveis em memória
+```{r}
+var1 <- 1
+var2 <- 2
+var3 <- 3
+var4 <- 4
+var5 <- 5
+var6 <- 6
+var7 <- 7
+var8 <- 8
+var9 <- 9
+var10 <- 10
+```
+
+Salve as 10 variáveis em arquivo a ser escolhido.
+
+Na apostila foi mencionado a utilização da função choose.files porem essa função não funciona no MAC
+```{r}
+#a = file.choose()
+#save(var1, var2, var3, var4, var5, var6, var7, var8, var9, var10, file=a)
+#save.image("/Users/regisspindola/Documents/Pessoal/saveComandaLine.RData")
+```
+
+# Exercício 2
+
+Criar 1 vetor com exatamente 4 elementos para cada tipo de dado:
+Lógico, Inteiro, Numérico, Texto, Imaginário
+```{r}
+vet_log <- c(T, T, F, T)
+vet_int <- c(1, 2, 3, 4)
+vet_num <- c(1.0, 2.0, 3.0, 4.0)
+vet_txt <- c("a", "b", "c", "d")
+vet_img <- c(1i, 2i, 3i, 4i)
+```
+
+Criar uma lista com 5 elementos. Cada elemento deve ser um vetor de 1 tipo de dado
+```{r}
+lista <- list(vet_log, vet_int,vet_num, vet_txt, vet_img)
+lista
+```
+
+Criar uma matriz 4 x 4 com 16 números inteiros pares
+```{r}
+mat <- matrix(seq(from=2, length.out = 16, by = 2), nrow = 4, byrow = T)
+mat
+```
+Criar um data.frame em que cada coluna é um dos vetores criados neste exercício.
+Nomear as colunas (a seu critério) 
+Nomear as linhas com “L1, L2, L3 e L4”
+```{r}
+df <- data.frame(vet_log, vet_int,vet_num, vet_txt, vet_img)
+names(df) <- c("coluna1", "coluna2", "coluna3", "coluna4", "coluna5")
+row.names(df) <- c("L1", "L2", "L3", "L4")
+df
+```
+

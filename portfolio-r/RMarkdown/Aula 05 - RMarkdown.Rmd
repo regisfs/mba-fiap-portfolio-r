@@ -1,0 +1,145 @@
+---
+title: "Aula 05 - RMarkdown"
+author: "Regis Spindola"
+date: "10/06/2018"
+output: html_document
+---
+
+# Exercício 1 - Basic Plot
+
+**Usando o dataset airquality, faça a plotagem do gráfico com a medição de ozônio em MAIO.**
+```{r}
+library("plotly")
+summary(airquality$Ozone)
+boxplot(airquality$Ozone, outline = F)
+t <- filter(airquality, Month == 5)
+plot(t$Ozone)
+t <- sort(t$Ozone)	
+plot(t)
+lines(x = 0:27, y= rep(115.00, 28), col='blue', type = 'l')
+lines(x = 0:27, y= rep(31.50, 28), col='blue', type = 'l')
+lines(x = 0:27, y= rep(18.00, 28), col='red', type = 'l')
+lines(x = 0:27, y= rep(11.00, 28), col='blue', type = 'l')
+lines(x = 0:27, y= rep(1.00, 28), col='blue', type = 'l')
+
+```
+
+**Fazer um boxplot que permita uma avaliação mensal e comparativa do Ozônio**
+```{r}
+boxplot(Ozone~Month, data=airquality)
+```
+
+* *Qual mês possui maior média de $O_{3}$ ?*
+
+* *Qual mês possui maior concentração de $O_{3}$ ?*
+
+* *Qual mês apresenta a menor variância de $O_{3}$ ?*
+
+* *E a maior?*
+
+* *Qual o mês com a maior temperatura média? *
+
+* *E qual tem a maior temperatura registrada? *
+
+* *O mês com mais ventos é o mesmo mês que possui mais radiação solar?*
+
+
+**Há alguma relação aparente entre concentração de ozônio e vento?**
+
+* Façam regressão linar com lm
+* Desenhem a linha com lines()
+```{r}
+var1 <- lm(data = airquality, formula = Ozone ~ Wind)
+plot(x = airquality$Wind, y = airquality$Ozone)
+lines(x = 0:20, y = cbind(1,0:20) %*% var1$coefficients, type = 'l', col='blue')
+```
+
+* Depois desenhem a mesma linha com a função abline.
+```{r}
+plot(x = airquality$Wind, y = airquality$Ozone)
+abline(lm(data = airquality, formula = Ozone ~ Wind), col='red')
+```
+
+**Múltiplos Gráficos**
+```{r}
+par(mfrow=c(1,2))
+plot(airquality$Wind, airquality$Ozone)
+plot(airquality$Solar.R, airquality$Ozone)
+```
+
+**Mesmo plot, usando with**
+```{r}
+par(mfrow = c(1,2))
+with(airquality, {
+  plot(Wind, Ozone, main = 'Ozonio pelo vento')
+  plot(Solar.R, Ozone, main = 'Ozonio pela radiação Solar')
+})
+```
+
+# Exercício 2 - LATTICE
+
+
+```{r}
+library("lattice")
+  
+state <- data.frame(state.x77, region = state.region)
+xyplot(Life.Exp ~ Income | region, data = state, layout = c(4, 1))
+
+```
+
+**Correlação entre assasinato é salário**
+```{r}
+state <- data.frame(state.x77, region = state.region)
+xyplot(Murder ~ Income | region, data = state, layout = c(4, 1))
+```
+
+**Análise dataset - household eletric power consumption**
+
+*Realizar download do dataset*
+https://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption
+
+*Carregue os dados do dataset*
+```{r}
+alldata <- read.table('~/data/household_power_consumption.txt', header = T, sep =";", na.strings='?')
+```
+
+*Quanto de memória é necessário para carregar o dataset?*
+```{r}
+object.size(alldata)
+```
+
+*Convertendo o campo de data*
+```{r}
+alldata$datetime <- dmy_hms( paste(alldata$Date, alldata$Time))
+alldata$Date <- dmy(alldata$Date)
+alldata$Time <- hms(alldata$Time)
+object.size(alldata)
+```
+
+*Filtro para utilizar só o mês de fevereiro*
+```{r}
+data = filter(alldata, Date >=ymd("2007-02-01" ) & Date < ymd("2007-03-01" ))
+data2 = filter(alldata, Date >=ymd("2009-02-01" ) & Date < ymd("2009-03-01" ))
+```
+
+
+**Fazer um histograma da coluna Global_active_power**
+```{r}
+hist(data$Global_active_power, col = 'red', main = 'Global Active Power')
+```
+
+**Fazer um gráfico de linhas do período**
+```{r}
+with(data, {
+  plot(Global_active_power, type = 'lines')
+})
+```
+
+**Faça um gráfico de linhas de 2 dias (01-fev a 02- fev)**
+```{r}
+data_2_dias = filter(alldata, Date >=ymd("2007-02-01" ) & Date < ymd("2007-02-02" ))
+with(data_2_dias, {
+  plot(Global_active_power, type = 'lines')
+})
+```
+
